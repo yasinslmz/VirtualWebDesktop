@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="assets/style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User</title>
+  </head>
+
+  <body>
+    <div class="mainWindow bg-windows" style="display: flex; justify-content: center">
+      <div class="col-3 align-items-center dis">
+        <div class="text-center">
+          <img
+            src="assets/images/yasin.png"
+            alt="User Image"
+            class="img-fluid rounded-circle"
+            style="width: 200px; height: 200px"
+          />
+          <h4 class="mt-4">Yasin</h4>
+        </div>
+
+        <form class="align-items-center">
+          <div class=" mt-2 text-center">
+            <!-- inputa class verince yanyana geliyorlar -->
+            <input class="inputW"
+              type="password"
+              class="form-control mt-4"
+              id="password"
+              name="password"
+              required
+              placeholder="Password"
+            />
+            <button onclick="checkPassword()" type="button" class="btnW mt-2">
+              Login
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      function checkPassword() {
+        const getPassword = document.getElementById("password").value;
+
+        if (getPassword == "123456") {
+                window.location.href = "./desktop.html";
+        } else {
+          alert("Incorrect password. Please try again!");
+        }
+      }
+    </script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

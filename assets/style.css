@@ -1,0 +1,133 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.mainWindow {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  align-items: center;
+}
+
+.bg-windows{
+  /* background: linear-gradient(to right, #00d5ff7b, #ff006f77, #9d00ff77); */
+background-color: #d7cae2;
+}
+.gg-windows {
+  display: flex;
+  height: 100vh;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  /* position: fixed; */
+}
+
+.gg-windows a {
+  cursor: pointer;
+}
+
+.btnW {
+  border: none;
+  background-color: #ffffff00;
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 30px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.btnW:hover {
+  transform: scale(1.1); 
+  box-shadow: 0 0 10px #0000004d;
+}
+
+.inputW {
+  border: none;
+  background-color: #ffffff00;
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 15px;
+  outline: none;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.inputW:hover {
+  transform: scale(1.01); 
+  box-shadow: 0 0 10px #0000004d;
+}
+
+.transparent-icon {
+  opacity: 0.19;
+}
+
+
+.kapsayici{
+  margin: 0!important;
+}
+
+
+.hoverbtn:hover{
+  background-color: rgb(238, 236, 234);
+  
+}
+.hoverbtn:hover i{
+  color: black;
+}
+.dpmenu {
+  border-radius: 0 10px 0  0; /* Sağ üst köşeye radius vermek için */
+  background-color: #93e4e2;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+
+.dropdown-menu a,li,i{
+ 
+  color: black;
+  border-radius: 5px;
+}
+
+
+
+.card1:hover{
+  background-color: #f9fafa!important;
+}
+
+.kapsayici{
+  background-image: url("./images/w98.jpg");
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+}
+
+.card{
+  cursor: pointer;
+}
+
+#modaldiv.modal::after {
+  background: none !important;
+}
+
+.modal-dialog{
+  max-width: 1200px!important;
+}
+.modal-content{
+  border-radius: 0;
+}
+
+.hizlilist{
+  margin-left: -4px;
+  font-size: 14px;
+  border-radius: 0;
+}
+.hizlilist li{
+  border: none;
+  border-radius: 0;
+}
+.hizlilist li:hover{
+  cursor: pointer;
+  background-color: #d6d1da;
+}
+

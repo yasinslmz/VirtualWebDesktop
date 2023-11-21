@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+  <link rel="stylesheet" href="assets/style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    td input {
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    #editor {
+      width: 100%;
+      height: 300px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+    
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.spinner {
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid #3498db;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+  </style>
+</head>
+
+<body>
+
+
+
+  <div class="kapsayici row">
+    <div class="modal fade" id="modaldivbelgelerim" tabindex="-1" role="dialog" aria-hidden="true"
+      style="background-color: transparent!important;">
+      <div class="modal-dialog w-100 h-100" role="document">
+        <div class="modal-content  w-100 h-75">
+          <div class="modal-header p-0">
+            <span><span><img src="assets/images/file.png" class="img-fluid ps-2 justify-content-start" height="27px"
+                  width="27px" alt=""></span>
+              <span style="font-size: 12px;"> Belgelerim</span></span>
+            <span>
+              <button class="close btn btn-danger btn-sm me-1 p-0 border-0"
+                style="background-color: transparent;color: red;font-size: 22px;" type="button" data-bs-dismiss="modal"
+                aria-label="Close"><i class="fa-solid fa-window-minimize fa-xs"></i></button>
+
+              <button class="close btn btn-danger btn-sm mt-1 p-0 border-0"
+                style="background-color: transparent;color: red;font-size: 22px;" type="button" data-bs-dismiss="modal"
+                aria-label="Close"><i class="fa-regular fa-window-maximize fa-xs" style="color: #04152f;"></i></button>
+
+              <button id="belgelerimkapa" class="close btn btn-danger btn-sm m-1 me-2 p-0 border-0"
+                style="background-color: transparent;color: red;font-size: 22px;" type="button" data-bs-dismiss="modal"
+                aria-label="Close">&times;</button>
+            </span>
+          </div>
+          <div class="modal-body row">
+            <div class="col-2 h-100 p-0">
+              <h6> &nbsp;&nbsp;&nbsp;<i class="fa-regular fa-star" style="color: #f2ea02;"></i> Hızlı Erişim</h6>
+              <ul class="list-group hizlilist">
+                <li class="list-group-item"><a href="" class="text-dark text-decoration-none" data-bs-toggle="modal"
+                    data-bs-target="#modaldivExcel">Excel</a></li>
+                <li class="list-group-item"><a href="" class="text-dark text-decoration-none" data-bs-toggle="modal"
+                    data-bs-target="#modaldivWord">Word</a></li>
+                <li class="list-group-item"><a href="" class="text-dark text-decoration-none" data-bs-toggle="modal"
+                    data-bs-target="#modaldivVscode">VsCODE</a></li>
+                <li class="list-group-item"><a href="" class="text-dark text-decoration-none" data-bs-toggle="modal"
+                    data-bs-target="#modaldivbilgisayarim">Bilgisayarım</a></li>
+                <li class="list-group-item"><a href="" class="text-dark text-decoration-none" data-bs-toggle="modal"
+                    data-bs-target="#modaldivresimler">Resimler</a></li>
+              </ul>
+            </div>
+            <div class="col-10 h-100">
+              <a href="#" class="btn" id="butonum">
+                <h6><i class="fa-solid fa-angle-down" style="color: #d0d3d7;"></i> Sık kullanılan dosyalar </h6>
+              </a>
+              <ul class="list-group hizlilist" id="listem">
+                <li class="list-group-item"><a href="" class="text-decoration-none text-dark" data-bs-toggle="modal"
+                  data-bs-target="#modaldivnot"><i class="fa-regular fa-note-sticky" style="font-size: 15px;"></i>
+                  DersNotlari.txt</a></li>
+                <li class="list-group-item"><a href="" class="text-decoration-none text-dark" data-bs-toggle="modal"
+                  data-bs-target="#modaldivword"><i class="fa-regular fa-file-word"></i> Tez.docx</a></li>
+                <li class="list-group-item"><a href="" class="text-decoration-none text-dark" data-bs-toggle="modal"
+                    data-bs-target="#modaldivresim4"><i class="fa-solid fa-image"></i> Erhankaya.jpeg</a></li>
+                <li class="list-group-item"><a href="" class="text-decoration-none text-dark" data-bs-toggle="modal"
+                  data-bs-target="#modaldivexcel"><i class="fa-regular fa-file-excel"></i> Vergi.excel</a></li>
+                <li class="list-group-item"><a href="" class="text-decoration-none text-dark" data-bs-toggle="modal"
+                    data-bs-target="#modaldivresim3"><i class="fa-solid fa-image"></i> Yakışıklı.jpeg</a></li>
+                <li class="list-group-item"><a href="" class="text-decoration-none text-dark" data-bs-toggle="modal"
+                    data-bs-target="#modaldivresim1"><i class="fa-solid fa-image"></i> VillagerAzra.jpeg</a></li>
+                <li class="list-group-item"><i class="fa-solid fa-c"></i> Classes.cs</li>
+              </ul>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="modaldivapps" tabindex="-1" role="dialog" aria-hidden="true"
+    style="background-color: transparent!important;">
+    <div class="modal-dialog w-100 h-100" role="document">
+      <div class="modal-content  w-100 h-75">
+        <div class="modal-header p-0">
+          <span><span><img src="assets/images/file.png" class="img-fluid ps-2 justify-content-start" height="27px"
+                width="27px" alt=""></span>
+            <span style="font-size: 12px;"> Uygulamalarım</span></span>
+          <span>
+            <button class="close btn btn-danger btn-sm me-1 p-0 border-0"
+              style="background-color: transparent;color: red;font-size: 22px;" type="button" data-bs-dismiss="modal"
+              aria-label="Close"><i class="fa-solid fa-window-minimize fa-xs"></i></button>
+
+            <button class="close btn btn-danger btn-sm mt-1 p-0 border-0"
+              style="background-color: transparent;color: red;font-size: 22px;" type="button" data-bs-dismiss="modal"
+              aria-label="Close"><i class="fa-regular fa-window-maximize fa-xs" style="color: #04152f;"></i></button>
+
+            <button id="belgelerimkapa" class="close btn btn-danger btn-sm m-1 me-2 p-0 border-0"
+              style="background-color: transparent;color: red;font-size: 22px;" type="button" data-bs-dismiss="modal"
+              aria-label="Close">&times;</button>
+          </span>
+        </div>
+        <div class="modal-body row">
+          <div class="col-2 h-100 p-0">
+            <h6> &nbsp;&nbsp;&nbsp;<i class="fa-regular fa-star" style="color: #f2ea02;"></i> Hızlı Erişim</h6>
+            <ul class="list-group hizlilist">
+              <li class="list-group-item"><a href="" class="text-dark text-decoration-none" data-bs-toggle="modal"
+                  data-bs-target="#modaldivexcel">Excel</a></li>
+              <li class="list-group-item"><a href="" class="text-dark text-decoration-none" data-bs-toggle="modal"
+                  data-bs-target="#modaldivword">Word</a></li>
+              
+              <li class="list-group-item"><a href="" class="text-dark text-decoration-none" data-bs-toggle="modal"
+                  data-bs-target="#modaldivbilgisayarim">Bilgisayarım</a></li>
+              <li class="list-group-item"><a href="" class="text-dark text-decoration-none" data-bs-toggle="modal"
+                  data-bs-target="#modaldivresimler">Resimler</a></li>
+            </ul>
+          </div>
+          <div class="col-10 h-100" style="flex-direction: row!important;display: flex;">
+            <a href="#" class="btn" id="butonum">
+              <h6><i class="fa-solid fa-angle-down" style="color: #d0d3d7;"></i> Uygulamalar </h6>
+            </a>
+            <div class="card  col-2  ms-2 mt-2  mb-2" style="background-color: transparent; border: none;">
+              <div class="card-body p-0 row align-items-center" style="background-color: transparent; border: none;">
+                <a href="#" class="text-decoration-none text-dark" data-bs-toggle="modal" data-bs-target="#modaldivexcel"
+                  style="outline: none!important;border: none;">
+                  <img class="h-75 w-100 align-items-center p-0" src="./assets/images/excel.png" class="img-fluid" alt="">
+                  <h5 class="card-text text-center ps-3">Excel</h5>
+                </a>
+    
+    
+              </div>
+    
+            </div>
+            <div class="card col-2 ms-2 mt-2  mb-3" style="background-color: transparent; border: none;">
+              <div class="card-body p-0 row align-items-center justify-content-center">
+                <a href="#" class="text-decoration-none text-dark" data-bs-toggle="modal" data-bs-target="#modaldivword"
+                  style="outline: none!important;border: none;">
+                  <img class="h-75 w-100 align-items-center p-0" src="./assets/images/word.png"   class="img-fluid" alt="">
+                  <h5 class="card-text text-center ps-3">Word</h5>
+                </a>
+              </div>
+    
+            </div>
+            <div class="card col-2 ms-3 mt-2  mb-3" style="background-color: transparent; border: none;">
+              <div class="card-body p-0 row align-items-center justify-content-center">
+                <a href="#" class="text-decoration-none text-dark" data-bs-toggle="modal" data-bs-target="#modaldivnot"
+                  style="outline: none!important;border: none;">
+                  <img class="w-100 align-items-center p-0" src="./assets/images/not.png"  height="100px" class="img-fluid" alt="">
+                  <h5 class="card-text text-center ps-3">Not Defteri</h5>
+                </a>
+              </div>
+    
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="modal fade" id="modaldivbilgisayarim" tabindex="-1" role="dialog" aria-hidden="true"
+      style="background-color: transparent!important;">
+      <div class="modal-dialog w-100 h-100" role="document">
+        <div class="modal-content  w-100 h-75">
+          <div class="modal-header p-0">
+            <span><span><img src="assets/images/pc.png" class="img-fluid ps-2 justify-content-start" height="27px"
+                  width="27px" alt=""></span>
+              <span style="font-size: 12px;"> Bilgisayarım</span></span>
+            <span>
+              <button class="close btn btn-danger btn-sm me-1 p-0 border-0"
+                style="background-color: transparent;color: red;font-size: 22px;" type="button" data-bs-dismiss="modal"
+                aria-label="Close"><i class="fa-solid fa-window-minimize fa-xs"></i></button>
+
+              <button class="close btn btn-danger btn-sm mt-1 p-0 border-0"
+                style="background-color: transparent;color: red;font-size: 22px;" type="button" data-bs-dismiss="modal"
+                aria-label="Close"><i class="fa-regular fa-window-maximize fa-xs" style="color: #04152f;"></i></button>
+
+              <button id="bilgisayarimkapa" class="close btn btn-danger btn-sm m-1 me-2 p-0 border-0"
+                style="background-color: transparent;color: red;font-size: 22px;" type="button" data-bs-dismiss="modal"
+                aria-label="Close">&times;</button>
+            </span>
+          </div>
+          <div class="modal-body row">
+            <div class="col-2 h-100 p-0">
+              <h6> &nbsp;&nbsp;&nbsp;<i class="fa-regular fa-star" style="color: #f2ea02;"></i> Hızlı Erişim</h6>
+              <ul class="list-group hizlilist">
+
+                <li class="list-group-item"><a href="" class="text-dark text-decoration-none" data-bs-toggle="modal"
+                    data-bs-target="#modaldivexcel">Excel</a></li>
+                <li class="list-group-item"><a href="" class="text-dark text-decoration-none" data-bs-toggle="modal"
+                    data-bs-target="#modaldivword">Word</a></li>
+                <li class="list-group-item"><a href="" class="text-dark text-decoration-none" data-bs-toggle="modal"
+                    data-bs-target="#modaldivVscode">VsCODE</a></li>
+                <li class="list-group-item"><a href="" class="text-dark text-decoration-none" data-bs-toggle="modal"
+                    data-bs-target="#modaldivbelgelerim">Belgelerim</a></li>
+                <li class="list-group-item"><a href="" class="text-dark text-decoration-none" data-bs-toggle="modal"
+                    data-bs-target="#modaldivresimler">Resimler</a></li>
+
+              </ul>
+            </div>
+            <div class="col-10 h-100">
+              <a href="#" class="btn">
+                <h6><i class="fa-solid fa-angle-down" style="color: #d0d3d7;"></i> Cihazlar ve Sürücüler </h6>
+              </a>
+              <div>
+                <img src="assets/images/pc.png" width="100" height="100" alt="" class="ps-4">
+                <div class="progress mt-1" role="progressbar" aria-label="Animated striped example" aria-valuenow="0"
+                  aria-valuemin="0" aria-valuemax="100" style="margin-top: 40px;width: 130px;">
+                  <div id="progressBar" class="bg-success progress-bar progress-bar-striped progress-bar-animated"
+                    style="width: 44%"></div>
+
+                </div>
+                <span style="font-size: 12px;">372 GB Dolu,472 GB Boş</span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="modaldivresimler" tabindex="-1" role="dialog" aria-hidden="true"
+      style="background-color: transparent!important;">
+      <div class="modal-dialog w-100 h-100" role="document">
+        <div class="modal-content  w-100 h-75">
+          <div class="modal-header p-0">
+            <span><span><img src="assets/images/file.png" class="img-fluid ps-2 justify-content-start" height="27px"
+                  width="27px" alt=""></span>
+              <span style="font-size: 12px;"> Resimler</span></span>
+            <span>
+              <button class="close btn btn-danger btn-sm me-1 p-0 border-0"
+                style="background-color: transparent;color: red;font-size: 22px;" type="button" data-bs-dismiss="modal"
+                aria-label="Close"><i class="fa-solid fa-window-minimize fa-xs"></i></button>
+
+              <button class="close btn btn-danger btn-sm mt-1 p-0 border-0"
+                style="background-color: transparent;color: red;font-size: 22px;" type="button" data-bs-dismiss="modal"
+                aria-label="Close"><i class="fa-regular fa-window-maximize fa-xs" style="color: #04152f;"></i></button>
+
+              <button id="resimlerkapa" class="close btn btn-danger btn-sm m-1 me-2 p-0 border-0"
+                style="background-color: transparent;color: red;font-size: 22px;" type="button" data-bs-dismiss="modal"
+                aria-label="Close">&times;</button>
+            </span>
+          </div>
+          <div class="modal-body row">
+            <div class="col-2 h-100 p-0">
+              <h6> &nbsp;&nbsp;&nbsp;<i class="fa-regular fa-star" style="color: #f2ea02;"></i> Hızlı Erişim</h6>
+              <ul class="list-group hizlilist">
+                <li class="list-group-item"><a href="" class="text-dark text-decoration-none" data-bs-toggle="modal"
+                    data-bs-target="#modaldivexcel">Excel</a></li>
+                <li class="list-group-item"><a href="" class="text-dark text-decoration-none" data-bs-toggle="modal"
+                    data-bs-target="#modaldivword">Word</a></li>
+                <li class="list-group-item"><a href="" class="text-dark text-decoration-none" data-bs-toggle="modal"
+                    data-bs-target="#modaldivVscode">VsCODE</a></li>
+                <li class="list-group-item"><a href="" class="text-dark text-decoration-none" data-bs-toggle="modal"
+                    data-bs-target="#modaldivbilgisayarim">Bilgisayarım</a></li>
+                <li class="list-group-item"><a href="" class="text-dark text-decoration-none" data-bs-toggle="modal"
+                    data-bs-target="#modaldivresimler">Belgelerim</a></li>
+              </ul>
+            </div>
+            <div class="col-10 h-100">
+              <a href="#" class="btn">
+                <h6><i class="fa-solid fa-angle-down" style="color: #d0d3d7;"></i> Resimler </h6>
+              </a>
+              <hr style="margin: 0;">
+              <div class="row ps-3 mt-3">
+                <div class="col-1 me-3 " style="height: 70px;">
+                  <a href="#" class="text-decoration-none text-dark" data-bs-toggle="modal"
+                    data-bs-target="#modaldivresim1">
+                    <img src="./assets/images/user.jpg" class="img-fluid h-100 ps-2 rounded" alt="">
+                    <span style="font-size: 11px;">VillagerAzra.jpg</span>
+                  </a>
+                </div>
+                <div class="col-1 me-3 text-center" style="height: 70px;">
+                  <a href="#" class="text-decoration-none text-dark" data-bs-toggle="modal"
+                    data-bs-target="#modaldivresim2">
+                    <img src="./assets/images/koy.jpg" class="img-fluid h-100 rounded" alt="">
+                    <span style="font-size: 11px;">Koy.jpg</span>
+                  </a>
+                </div>
+                <div class="col-1 me-3" style="height: 70px;">
+                  <a href="#" class="text-decoration-none text-dark" data-bs-toggle="modal"
+                    data-bs-target="#modaldivresim3">
+                    <img src="./assets/images/yasin.png" class="img-fluid h-100 rounded" alt="">
+                    <span style="font-size: 11px;">Yakışıklı.jpg</span>
+                  </a>
+
+                </div>
+                <div class="col-1 me-3" style="height: 70px;">
+                  <a href="#" class="text-decoration-none text-dark" data-bs-toggle="modal"
+                    data-bs-target="#modaldivresim4">
+                    <img src="./assets/images/erhan.jpeg" class="img-fluid h-100 rounded" alt="">
+                    <span style="font-size: 11px;">Erhankaya.jpg</span>
+                  </a>
+                </div>
+                <div class="col-1 me-3 text-center" style="height: 70px;">
+                  <a href="#" class="text-decoration-none text-dark" data-bs-toggle="modal"
+                    data-bs-target="#modaldivresim5">
+                    <img src="./assets/images/fb.jpg" class="img-fluid h-100 rounded" alt="">
+                    <span style="font-size: 11px;">Fb.jpg</span>
+                  </a>
+                </div>
+
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="modal fade" id="modaldivresim1" tabindex="-1" role="dialog" aria-hidden="true"
+      style="background-color: transparent!important;">
+      <div class="modal-dialog w-100 h-100" role="document">
+        <div class="modal-content  w-100 h-75">
+          <div class="modal-header p-0">
+
+            <span style="font-size: 12px;" class="ps-3"> Yakışıklı.jpg</span>
+
+
+            <button id="resim1kapa" class="close btn btn-danger btn-sm m-1 me-2 p-0 border-0"
+              style="background-color: transparent;color: red;font-size: 22px;" type="button" data-bs-dismiss="modal"
+              aria-label="Close">&times;</button>
+
+          </div>
+          <div class="modal-body w-100 h-75" style="padding: 0!important;margin: 0%;">
+            <img src="./assets/images/user.jpg" alt="" class="w-100 h-100">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="modaldivresim2" tabindex="-1" role="dialog" aria-hidden="true"
+      style="background-color: transparent!important;">
+      <div class="modal-dialog w-100 h-100" role="document">
+        <div class="modal-content  w-100 h-75">
+          <div class="modal-header p-0">
+
+            <span style="font-size: 12px;" class="ps-3"> Yakışıklı.jpg</span>
+
+
+            <button class="close btn btn-danger btn-sm m-1 me-2 p-0 border-0"
+              style="background-color: transparent;color: red;font-size: 22px;" type="button" data-bs-dismiss="modal"
+              aria-label="Close">&times;</button>
+
+          </div>
+          <div class="modal-body w-100 h-75" style="padding: 0!important;margin: 0%;">
+            <img src="./assets/images/koy.jpg" alt="" class="w-100 h-100">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="modaldivresim3" tabindex="-1" role="dialog" aria-hidden="true"
+      style="background-color: transparent!important;">
+      <div class="modal-dialog w-100 h-100" role="document">
+        <div class="modal-content  w-100 h-75">
+          <div class="modal-header p-0">
+
+            <span style="font-size: 12px;" class="ps-3"> Yakışıklı.jpg</span>
+
+
+            <button id="resim1kapa" class="close btn btn-danger btn-sm m-1 me-2 p-0 border-0"
+              style="background-color: transparent;color: red;font-size: 22px;" type="button" data-bs-dismiss="modal"
+              aria-label="Close">&times;</button>
+
+          </div>
+          <div class="modal-body w-100 h-75" style="padding: 0!important;margin: 0%;">
+            <img src="./assets/images/yasin.png" alt="" class="w-100 h-100">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="modaldivresim4" tabindex="-1" role="dialog" aria-hidden="true"
+      style="background-color: transparent!important;">
+      <div class="modal-dialog w-100 h-100" role="document">
+        <div class="modal-content  w-100 h-75">
+          <div class="modal-header p-0">
+
+            <span style="font-size: 12px;" class="ps-3"> Yakışıklı.jpg</span>
+
+
+            <button id="resim1kapa" class="close btn btn-danger btn-sm m-1 me-2 p-0 border-0"
+              style="background-color: transparent;color: red;font-size: 22px;" type="button" data-bs-dismiss="modal"
+              aria-label="Close">&times;</button>
+
+          </div>
+          <div class="modal-body w-100 h-75" style="padding: 0!important;margin: 0%;">
+            <img src="./assets/images/erhan.jpeg" alt="" class="w-100 h-100">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="modaldivresim5" tabindex="-1" role="dialog" aria-hidden="true"
+      style="background-color: transparent!important;">
+      <div class="modal-dialog w-100 h-100" role="document">
+        <div class="modal-content  w-100 h-75">
+          <div class="modal-header p-0">
+
+            <span style="font-size: 12px;" class="ps-3"> Yakışıklı.jpg</span>
+
+
+            <button id="resim1kapa" class="close btn btn-danger btn-sm m-1 me-2 p-0 border-0"
+              style="background-color: transparent;color: red;font-size: 22px;" type="button" data-bs-dismiss="modal"
+              aria-label="Close">&times;</button>
+
+          </div>
+          <div class="modal-body w-100 h-75" style="padding: 0!important;margin: 0%;">
+            <img src="./assets/images/fb.jpg" alt="" class="w-100 h-100">
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="modal fade" id="modaldivnot" tabindex="-1" role="dialog" aria-hidden="true"
+      style="background-color: transparent!important;">
+      <div class="modal-dialog w-100 h-100" role="document">
+        <div class="modal-content  w-100 h-75">
+          <div class="modal-header p-0">
+
+            <span style="font-size: 12px;" class="ps-3"> Not Defteri</span>
+
+
+            <button id="notkapa" class="close btn btn-danger btn-sm m-1 me-2 p-0 border-0"
+              style="background-color: transparent;color: red;font-size: 22px;" type="button" data-bs-dismiss="modal"
+              aria-label="Close">&times;</button>
+
+          </div>
+          <div class="modal-body w-100 h-75" style="padding: 0!important;margin: 0%;">
+            <textarea id="notTextArea" class="w-100  h-100"></textarea>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="modaldivword" tabindex="-1" role="dialog" aria-hidden="true"
+      style="background-color: transparent!important;">
+      <div class="modal-dialog w-100 h-100" role="document">
+        <div class="modal-content  w-100 h-75">
+          <div class="modal-header p-0">
+
+            <span style="font-size: 12px;" class="ps-3"> Microsoft Word</span>
+
+
+            <button id="notkapa" class="close btn btn-danger btn-sm m-1 me-2 p-0 border-0"
+              style="background-color: transparent;color: red;font-size: 22px;" type="button" data-bs-dismiss="modal"
+              aria-label="Close">&times;</button>
+
+          </div>
+          <div class="modal-body w-100 h-75" style="padding: 0!important;margin: 0%;">
+            <div id="editor" contenteditable="true"></div>
+
+            <div>
+              <button class="btn btn-dark ms-2" onclick="boldText()">Kalın</button>
+              <button class="btn btn-secondary " onclick="italicText()">İtalik</button>
+              <button class="btn btn-success" onclick="underlineText()">Altı Çizili</button>
+              <label for="fontSize">Font Boyutu:</label>
+              <input type="number" id="fontSize" min="1" max="100" value="16">
+              <button class="btn btn-warning"  onclick="changeFontSize()">Değiştir</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="modaldivexcel" tabindex="-1" role="dialog" aria-hidden="true"
+      style="background-color: transparent!important;">
+      <div class="modal-dialog w-100 h-100" role="document">
+        <div class="modal-content  w-100 h-75">
+          <div class="modal-header p-0">
+
+            <span style="font-size: 12px;" class="ps-3"> Excel</span>
+
+
+            <button id="excelkapa" class="close btn btn-danger btn-sm m-1 me-2 p-0 border-0"
+              style="background-color: transparent;color: red;font-size: 22px;" type="button" data-bs-dismiss="modal"
+              aria-label="Close">&times;</button>
+
+          </div>
+          <div class="modal-body w-100 h-75" style="padding: 0!important;margin: 0%;">
+
+
+            <table id="excelTable">
+              <thead>
+                <tr>
+                  <th>A</th>
+                  <th>B</th>
+                  <th>C</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input type="text" value=""></td>
+                  <td><input type="text" value=""></td>
+                  <td><input type="text" value=""></td>
+                </tr>
+                <tr>
+                  <td><input type="text" value=""></td>
+                  <td><input type="text" value=""></td>
+                  <td><input type="text" value=""></td>
+                </tr>
+                <tr>
+                  <td><input type="text" value=""></td>
+                  <td><input type="text" value=""></td>
+                  <td><input type="text" value=""></td>
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-2 ps-3 pt-4">
+      <div class="col-7 row ms-2 mb-3">
+        <div class="card  col-8  ms-2 mt-2" style="background-color: transparent; border: none;">
+          <div class="card-body p-0 row justify-content-center align-items-center">
+            <a href="" class="btn " data-bs-toggle="modal" data-bs-target="#modaldivbilgisayarim" id="bilgisayarim">
+              <img class="h-75 w-75 align-items-center p-0" src="./assets/images/pc.png" class="img-fluid" alt="">
+              <h5 class="card-text text-center " style="white-space: nowrap;">Bilgisayarım</h5>
+            </a>
+          </div>
+
+        </div>
+
+        
+        <div class="card  col-8  ms-2 mt-2" style="background-color: transparent; border: none;">
+          <div class="card-body p-0 row justify-content-center align-items-center">
+            <a href="" class="btn " data-bs-toggle="modal" data-bs-target="#modaldivbelgelerim" id="belgelerim">
+              <img class="h-75 w-75 align-items-center p-0" src="./assets/images/file.png" class="img-fluid" alt="">
+              <h5 class="card-text text-center " style="white-space: nowrap;">Belgelerim</h5>
+            </a>
+
+          </div>
+
+        </div>
+
+
+
+        <div class="card  col-8  ms-2 mt-2" style="background-color: transparent; border: none;">
+          <div class="card-body p-0 row justify-content-center align-items-center">
+            <a href="" class="btn " data-bs-toggle="modal" data-bs-target="#modaldivresimler" id="resimler">
+              <img class="h-75 w-75 align-items-center p-0" src="./assets/images/file.png" class="img-fluid" alt="">
+              <h5 class="card-text text-center " style="white-space: nowrap;">Resimler</h5>
+            </a>
+
+          </div>
+
+        </div>
+        <div class="card  col-8  ms-2 mt-2" style="background-color: transparent; border: none;">
+          <div class="card-body p-0 row justify-content-center align-items-center">
+            <a href="" class="btn " data-bs-toggle="modal" data-bs-target="#modaldivapps" id="apps">
+              <img class="h-75 w-75 align-items-center p-0" src="./assets/images/file.png" class="img-fluid" alt="">
+              <h5 class="card-text text-center " style="white-space: nowrap;">Uygulamalar</h5>
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+
+    <nav class="navbar navbar-expand-lg fixed-bottom " style="background-color: whitesmoke;">
+      <div class="container-fluid justify-content-start" style="padding-left: 0;" id="gorevcubugu">
+        <div class="dropup">
+          <button role="button" type="button" class="btn dropdown " data-bs-toggle="dropdown"
+            style="outline: none!important;border: none;">
+            <i class="fab fa-windows" style="font-size: 22px;"></i>
+          </button>
+          <div class="dropdown-menu mb-2 dpmenu" style="padding-left: 13px;width: 500px;margin-left: -1px;">
+            <div class="row">
+              <div class="col-1 row" style="flex-direction: column;justify-content: end;">
+                <nav class="navbar ">
+                  <div class="">
+
+                    <button role="button" type="button" class="btn dropdown hoverbtn" data-bs-toggle="dropdown"
+                      style="outline: none!important;border: none;color: white;">
+                      <i class="fa-regular fa-user" style="font-size: 22px;"></i>
+                    </button>
+                    <button role="button" type="button" class="btn dropdown hoverbtn" data-bs-toggle="dropdown"
+                      style="outline: none!important;border: none;color: white;">
+                      <i class="fa-regular fa-file" style="font-size: 22px;"></i>
+                    </button>
+                    <button role="button" type="button" class="btn dropdown hoverbtn" data-bs-toggle="dropdown"
+                      style="outline: none!important;border: none;color: white;">
+                      <i class="fa-regular fa-moon" style="font-size: 22px;"></i>
+                    </button>
+
+                    <button  onclick="shutdownComputer()" role="button" type="button" class="btn dropdown hoverbtn" data-bs-toggle="dropdown"
+                      style="outline: none!important;border: none;color: white;">
+                      <i class="fas fa-power-off"></i>
+                    </button>
+                  </div>
+                </nav>
+
+              </div>
+              <div class="col-4 ms-4 p-0 row" style="display:flex;flex-direction:column;justify-content: end;">
+                <ul class="ps-3 pb-1 mb-2 dropdownlist" style="list-style: none;">
+                  
+                  <li><a class="dropdown-item" href="#" data-bs-target="#modaldivresimler" data-bs-toggle="modal"> <i class="fas fa-images"></i></i> Resimler</a></li>
+                  <li><a class="dropdown-item" href="#" data-bs-target="#modaldivbelgelerim" data-bs-toggle="modal"> <i class="fas fa-folder-open"></i> Belgelerim</a></li>
+                  <li><a class="dropdown-item" href="#" data-bs-target="#modaldivbilgisayarim" data-bs-toggle="modal"> <i class="fas fa-desktop"></i> Bilgisayarım</a></li>
+
+
+                </ul>
+              </div>
+              <div class="col-7 row ms-2 mb-3">
+                <div class="card card1 col-5 ms-2 mt-2" style="background-color: transparent; border: none;">
+                  <div class="card-body p-0 row align-items-center "
+                    style="background-color: transparent; border: none;">
+                    <img style="background-color: transparent;" class="h-75 w-100 align-items-center p-0"
+                      src="./assets/images/ins.png" class="img-fluid" alt="">
+                  </div>
+                </div>
+
+                <div class="card card1  col-5 ms-2 mt-2" style="background-color: transparent; border: none;">
+                  <div class="card-body p-0 row align-items-center"
+                    style="background-color: transparent; border: none;">
+                    <img class="h-75 w-100 align-items-center p-0" src="./assets/images/excel.png" class="img-fluid"
+                      alt="">
+
+                  </div>
+
+                </div>
+                <div class="card card1  col-5 ms-2 mt-2" style="background-color: transparent; border: none;">
+                  <div class="card-body p-0 row align-items-center justify-content-center">
+                    <img class="h-75 w-75 align-items-center p-0" src="./assets/images/word.png" class="img-fluid"
+                      alt="">
+
+                  </div>
+
+                </div>
+                <div class="card card1  col-5 ms-2 mt-2" style="background-color: transparent; border: none;">
+                  <div class="card-body p-0 row align-items-center">
+                    <img class="h-75 w-100 align-items-center ps-2" src="./assets/images/ph.png" class="img-fluid"
+                      alt="">
+
+                  </div>
+
+                </div>
+                <div class="card  card1 col-5 ms-2 mt-2" style="background-color: transparent; border: none;">
+                  <div class="card-body p-0 row  align-items-center">
+                    <img class="h-75 w-100 align-items-center p-0" src="./assets/images/vs.png" class="img-fluid"
+                      alt="">
+
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <form class="d-flex ms-1" role="search">
+          <input class="form-control me-2" type="search" placeholder="Windows 95" aria-label="Search">
+
+        </form>
+        <button role="button" type="button" class="btn dropdown " data-bs-toggle=""
+          style="outline: none!important;border: none;">
+          <i class="fa-solid fa-database" style="font-size: 22px;color: rgb(189, 189, 102);"></i>
+        </button>
+        <button role="button" type="button" class="btn dropdown " data-bs-toggle=""
+          style="outline: none!important;border: none;">
+          <i class="fa-solid fa-envelope" style="color: #346fd5;font-size: 22px;"></i>
+        </button>
+        <button role="button" type="button" class="btn dropdown " data-bs-toggle=""
+          style="outline: none!important;border: none;">
+          <i class="fa-brands fa-google" style="color: #d6da12;font-size: 22px;"></i>
+        </button>
+        <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modaldivnot"
+          style="outline: none!important;border: none;">
+          <i class="fa-regular fa-note-sticky" style="font-size: 22px;"></i>
+        </a>
+
+        <div id="kutu">
+
+        </div>
+        <span id="clock"
+          style="color: white; margin-right: 15px; font-size: 18px;position: absolute; right: 10px;color: black;"></span>
+
+      </div>
+    </nav>
+    <div id="overlay" class="overlay">
+      <div class="spinner"></div>
+    </div>
+  </div>
+
+
+  <script>
+    function shutdownComputer() {
+      var overlay = document.getElementById("overlay");
+      overlay.style.display = "flex";
+        setTimeout(() => {
+          window.location.href="./power.html";
+        }, 3000);
+    }
+</script>
+
+
+
+
+
+
+  <script>
+
+    var appList = [
+      '<a class="btn d-flex justify-content-center align-items-center mb-1"  data-bs-toggle="modal" data-bs-target="#modaldivbelgelerim"  style="height: 33px; width:33px;padding: 0;background-color: aqua!important;">' +
+      '<img src="assets/images/file.png" class="w-100 h-100" alt="">' +
+      '</a>',
+      '<a class="btn d-flex justify-content-center align-items-center mb-1"  data-bs-toggle="modal" data-bs-target="#modaldivbilgisayarim"  style="height: 33px; width:33px;padding: 0;background-color: aqua!important;">' +
+      '<img src="assets/images/pc.png" class="w-100 h-100" alt="">' +
+      '</a>',
+      '<a class="btn d-flex justify-content-center align-items-center mb-1" style="height: 33px; width:33px;padding: 0;background-color: aqua!important;">' +
+      '<img src="assets/images/excel.png" class="w-100 h-100" alt="">' +
+      '</a>',
+      '<a class="btn d-flex justify-content-center align-items-center mb-1" style="height: 33px; width:33px;padding: 0;background-color: aqua!important;">' +
+      '<img src="assets/images/word.png" class="w-100 h-100" alt="">' +
+      '</a>',
+      '<a class="btn d-flex justify-content-center align-items-center mb-1" style="height: 33px; width:33px;padding: 0;background-color: aqua!important;">' +
+      '<img src="assets/images/file.png" class="w-100 h-100" alt="">' +
+      '</a>',
+      '<a class="btn d-flex justify-content-center align-items-center mb-1" style="height: 33px; width:33px;padding: 0;background-color: aqua!important;">' +
+      '<img src="assets/images/vs.png" class="w-100 h-100" alt="">' +
+      '</a>'
+
+    ]
+
+    var durum = true;
+    document.getElementById("butonum").addEventListener('click', function () {
+      if (!durum) {
+        document.getElementById('listem').style.display = "block";
+
+      }
+      else {
+        document.getElementById('listem').style.display = "none";
+
+      }
+      durum = !durum;
+    });
+
+  </script>
+
+  <script>
+
+    document.getElementById("belgelerim").addEventListener('click', function () {
+      var kutu = document.getElementById("kutu");
+
+      kutu.innerHTML = appList[0];
+
+    })
+
+    document.getElementById("belgelerimkapa").addEventListener('click', function () {
+
+      var kutu = document.getElementById("kutu");
+      kutu.innerHTML = "";
+
+    })
+
+    document.getElementById("bilgisayarim").addEventListener('click', function () {
+      var kutu = document.getElementById("kutu");
+
+      kutu.innerHTML = appList[1];
+
+    })
+
+    document.getElementById("bilgisayarimkapa").addEventListener('click', function () {
+
+      var kutu = document.getElementById("kutu");
+      kutu.innerHTML = "";
+    })
+    document.getElementById("resimler").addEventListener('click', function () {
+      var kutu = document.getElementById("kutu");
+
+      kutu.innerHTML = appList[4];
+
+    })
+
+    document.getElementById("resimlerkapa").addEventListener('click', function () {
+
+      var kutu = document.getElementById("kutu");
+      kutu.innerHTML = "";
+    })
+  </script>
+
+  <script>
+
+    var table = document.getElementById('excelTable');
+
+    for (var i = 0; i < table.rows.length; i++) {
+      for (var j = 0; j < table.rows[i].cells.length; j++) {
+        var cell = table.rows[i].cells[j];
+        var input = cell.querySelector('input');
+
+        input.addEventListener('input', function () {
+
+          console.log('Değişiklik yapıldı:', this.value);
+        });
+      }
+    }
+  </script>
+
+
+  <script>
+    function updateClock() {
+      var now = new Date();
+      var hours = now.getHours();
+      var minutes = now.getMinutes();
+      var seconds = now.getSeconds();
+
+      hours = padZero(hours);
+      minutes = padZero(minutes);
+      seconds = padZero(seconds);
+
+      var clockElement = document.getElementById('clock');
+      if (clockElement) {
+        clockElement.innerHTML = hours + ':' + minutes + ':' + seconds;
+      }
+
+      setTimeout(updateClock, 1000);
+    }
+
+    function padZero(num) {
+      return (num < 10 ? '0' : '') + num;
+    }
+
+    // Sayfa yüklendiğinde saat güncellenmeye başlasın
+    document.addEventListener('DOMContentLoaded', function () {
+      updateClock();
+    });
+  </script>
+
+  <script>
+       function boldText() {
+            document.execCommand('bold', false, null);
+        }
+
+        function italicText() {
+            document.execCommand('italic', false, null);
+        }
+
+        function underlineText() {
+            document.execCommand('underline', false, null);
+        }
+
+        function changeFontSize() {
+            var fontSize = document.getElementById('fontSize').value;
+            document.execCommand('fontSize', false, fontSize);
+        }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+    integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
